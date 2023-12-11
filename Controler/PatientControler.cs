@@ -1,4 +1,5 @@
-﻿using Hospital_Managment_System.Services;
+﻿using Hospital_Managment_System.Entities;
+using Hospital_Managment_System.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,8 @@ namespace Hospital_Managment_System.Controler
             int userOpt = int.Parse(Console.ReadLine());
             if (userOpt == 1)
             {
-                patientService.AddPatient();
+                AddPatient patient = new AddPatient() { FirstName = "", LastName = "", Email = "" };
+                patientService.AddPatient(patient);
             }else if (userOpt == 2)
             {
                 patientService.GetPatients();

@@ -15,7 +15,7 @@ namespace Hospital_Managment_System
 
         Task<Room> AddRoom();
 
-        Task UpdateRoom();
+        Task<Room> UpdateRoom();
 
         Task DeleteRoom();
     }

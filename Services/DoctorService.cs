@@ -52,6 +52,7 @@ namespace Hospital_Managment_System.Services
             };
             hospitalDBContext.Doctors.Add(doc1);
             hospitalDBContext.SaveChanges();
+            Console.WriteLine("Doctor created successfully");
             return doc1;
         }
 

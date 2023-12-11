@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hospital_Managment_System.Migrations
 {
     [DbContext(typeof(HospitalDBContext))]
-    [Migration("20231208070907_hospitalMS")]
-    partial class hospitalMS
+    [Migration("20231210124958_HMS1")]
+    partial class HMS1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,11 +33,11 @@ namespace Hospital_Managment_System.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentId"));
 
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<TimeOnly>("AppointmentTime")
                         .HasColumnType("time");
-
-                    b.Property<DateTime>("AppointmnetDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
@@ -113,7 +113,7 @@ namespace Hospital_Managment_System.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"));
 
-                    b.Property<string>("RoomName")
+                    b.Property<string>("RoomNumber")
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
@@ -143,11 +143,13 @@ namespace Hospital_Managment_System.Migrations
 
             modelBuilder.Entity("Hospital_Managment_System.Entities.Patient", b =>
                 {
-                    b.HasOne("Hospital_Managment_System.Entities.Room", null)
+                    b.HasOne("Hospital_Managment_System.Entities.Room", "Room")
                         .WithMany("Patients")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Hospital_Managment_System.Entities.Doctor", b =>

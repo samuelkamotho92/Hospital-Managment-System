@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Hospital_Managment_System.Entities
 {
-    internal class AddDoctor
+     public class AddDoctor
     {
+        public string DoctorName { get; set; }
+
+        public string Speciality { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Hospital_Managment_System
 
         Task<Appointment> GetAppointmentById();
 
-        Task<Appointment> AddAppointmnet();
+        Task<Appointment> AddAppointment();
 
         Task UpdateAppointment();
 

@@ -37,7 +37,7 @@ namespace Hospital_Managment_System.Services
 
         
 
-    public async Task AddPatient()
+    public async Task<AddPatient> AddPatient(AddPatient patient)
         {
             try
             {
@@ -49,35 +49,62 @@ namespace Hospital_Managment_System.Services
                 string LastName = Console.ReadLine();
                 Console.WriteLine("Enter Email");
                 string Email = Console.ReadLine();
-               // Console.WriteLine("Assign to Room");
-               // int Roomid = int.Parse(Console.ReadLine());
-                Patient patient1 = new Patient()
+                Console.WriteLine("Assign Room");
+                Console.WriteLine("Choose option");
+                Console.WriteLine("1: Yes");
+                Console.WriteLine("2: No");
+
+                int userInp = int.Parse(Console.ReadLine());
+                if (userInp == 2)
                 {
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    Email = Email,
-                };
+                    Patient patient1 = new Patient()
+                    {
+                        FirstName = FirstName,
+                        LastName = LastName,
+                        Email = Email,
+                        Room = new Room() { RoomNumber = "00", RoomType = "Outpatient" }
+                    };
 
+                    hospitalDBContext.patients.Add(patient1);
+                    hospitalDBContext.SaveChanges();
+                    Console.WriteLine("Patient Created and assigned No Room");
+                }
+                else if (userInp == 1)
+                {
+                    {
+                        Console.WriteLine("Enter Room Number");
+                        string roomNumber = Console.ReadLine();
+                        Console.WriteLine("Enter Room Type");
+                        string roomType = Console.ReadLine();
+                        Patient patient1 = new Patient()
+                        {
+                            FirstName = FirstName,
+                            LastName = LastName,
+                            Email = Email,
+                            Room = new Room() { RoomNumber = roomNumber, RoomType = roomType }
+                        };
 
-                hospitalDBContext.patients.Add(patient1);
-                hospitalDBContext.SaveChanges();
-
-                /* hospitalDBContext.patients.Add(patient);
-                 Console.WriteLine(patient);
-                 hospitalDBContext.SaveChanges();
-                 Console.WriteLine("Patient Created Successfully");*/
+                        hospitalDBContext.patients.AddAsync(patient1);
+                        hospitalDBContext.SaveChanges();
+                        Console.WriteLine($"Patient Created and assigned to RoomNo: {roomNumber} of type {roomType}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Choose correct option provided please");
+                }
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.InnerException);
             }
-           
+            return patient;
         }
 
         public async Task DeletePatient()
         {
             int stdId = userInput();
-            var patient = hospitalDBContext.patients.Find(stdId);
+            var patient = await hospitalDBContext.patients.FindAsync(stdId);
             hospitalDBContext.patients.Remove(patient);
             hospitalDBContext.SaveChanges();
             Console.WriteLine("Patient deleted Successfully");
@@ -95,7 +122,7 @@ namespace Hospital_Managment_System.Services
         public async Task<List<Patient>> GetPatients()
         {
             List<Patient> patients = hospitalDBContext.patients.ToList();
-            Console.WriteLine("The Registered Students are");
+            Console.WriteLine("The Registered Patients are");
             foreach (var patient in patients)
             {
                 Console.WriteLine($"{patient.PatientId}: {patient.FirstName} {patient.LastName}");
@@ -106,14 +133,13 @@ namespace Hospital_Managment_System.Services
 
         public async Task UpdatePatient()
         {
+            Console.WriteLine("Enter Id of patient you want to update");
             int stdId = userInput();
             Patient patient = hospitalDBContext.patients.Find(stdId);
             Console.WriteLine(patient);
             if (patient != null)
             {
-                patient.FirstName = "Samuel";
-                patient.LastName = "Kamotho";
-                patient.Email = "samuelkamotho92@gmail.com";
+                patient.Email = "josee@gmail.com";
                 hospitalDBContext.SaveChanges();
             }    
         }

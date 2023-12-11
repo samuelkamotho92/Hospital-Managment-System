@@ -13,7 +13,7 @@ namespace Hospital_Managment_System
 
         Task<Patient> GetPatientById();
 
-        Task AddPatient();
+        Task<AddPatient> AddPatient(AddPatient patient);
 
         Task UpdatePatient();
 

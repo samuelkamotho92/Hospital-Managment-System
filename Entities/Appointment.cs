@@ -14,7 +14,7 @@ namespace Hospital_Managment_System.Entities
 
         public int DoctorId { get; set; }
 
-        public DateTime AppointmnetDate { get; set;}
+        public DateTime AppointmentDate { get; set;}
 
         public TimeOnly AppointmentTime { get; set; }
     }
